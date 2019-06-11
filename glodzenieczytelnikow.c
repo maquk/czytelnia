@@ -26,16 +26,18 @@ void *readerJob(void *arg) {
         if (NO_READERS_READING == 1) {
             pthread_mutex_lock(&resourceMutex);
         }
-        pthread_mutex_unlock(&readerMutex);
-        pthread_mutex_unlock(&tryResourceMutex);
          printf("READER ID %d WALKED IN \n",*id);
         printf("ReaderQ: %d , WriterQ: %d [in: R:%d W:%d]\n",NO_READERS-NO_READERS_READING,NO_WRITERS-NO_WRITERS_WRITING,NO_READERS_READING,NO_WRITERS_WRITING);
+        pthread_mutex_unlock(&readerMutex);
+        pthread_mutex_unlock(&tryResourceMutex);
         sleep(2);
         pthread_mutex_lock(&readerMutex);
         NO_READERS_READING--;
         if (NO_READERS_READING == 0) { // Check if you are the last reader
             pthread_mutex_unlock(&resourceMutex);
         }
+         printf("READER ID %d WALKED OUT \n",*id);
+        printf("ReaderQ: %d , WriterQ: %d [in: R:%d W:%d]\n",NO_READERS-NO_READERS_READING,NO_WRITERS-NO_WRITERS_WRITING,NO_READERS_READING,NO_WRITERS_WRITING);
         pthread_mutex_unlock(&readerMutex);
     }
     return 0;
@@ -58,6 +60,8 @@ void *writerJob(void *arg) {
         sleep(2);
         pthread_mutex_unlock(&resourceMutex);
         criticalWriters--;
+         printf("WRITER ID %d WALKED OUT \n",*id);
+        printf("ReaderQ: %d , WriterQ: %d [in: R:%d W:%d]\n",NO_READERS-NO_READERS_READING,NO_WRITERS-criticalWriters,NO_READERS_READING,criticalWriters);
 
 
         pthread_mutex_lock(&writerMutex);
