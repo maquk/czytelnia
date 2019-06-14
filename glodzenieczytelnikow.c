@@ -80,7 +80,7 @@ int main(int argc, char *argv[]) {
 
     // Initialize arrays of threads IDs
     pthread_t *readersThreadsIds = malloc(NO_READERS * sizeof(pthread_t));
-    pthread_t *writersThreadsIds = malloc(NO_READERS * sizeof(pthread_t)); // NO_WRITERS
+    pthread_t *writersThreadsIds = malloc(NO_WRITERS * sizeof(pthread_t)); // NO_WRITERS
 
     // Initialize shared memory (array) with random numbers
 
